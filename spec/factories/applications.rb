@@ -3,4 +3,8 @@ FactoryBot.define do
     name { "MyString" }
     token { "MyString" }
   end
+
+  trait :invalid do 
+    name { nil }
+  end
 end

@@ -1,9 +1,11 @@
 class MessagesController < ApplicationController
+  before_action :set_application 
+  before_action :set_chat
   before_action :set_message, only: [:show, :update, :destroy]
 
   # GET /messages
   def index
-    @messages = Message.all
+    @messages = @chat.messages
 
     paginate collection: @messages
   end
@@ -15,7 +17,7 @@ class MessagesController < ApplicationController
 
   # POST /messages
   def create
-    @message = Message.new(message_params)
+    @message = @chat.messages.new(message_params)
 
     if @message.save
       render json: @message, status: :created
@@ -39,13 +41,21 @@ class MessagesController < ApplicationController
   end
 
   private
+
+    def set_application
+      @application = Application.find_by!(token: params[:application_token])
+    end
+
+    def set_chat
+      @chat = @application.chats.find_by!(number: params[:chat_number])
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_message
-      @message = Message.find(params[:id])
+      @message = @chat.messages.find_by!(number: params[:number])
     end
 
     # Only allow a trusted parameter "white list" through.
     def message_params
-      params.require(:message).permit(:content, :chat_number)
+      params.require(:message).permit(:content)
     end
 end

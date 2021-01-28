@@ -1,10 +1,10 @@
 class ChatsController < ApplicationController
-  before_action :set_chat, only: [:show, :update, :destroy]
+  before_action :set_application 
+  before_action :set_chat, only: %i(show update destroy)
 
   # GET /chats
   def index
-    @chats = Chat.all
-
+    @chats = @application.chats.all
     paginate collection: @chats
   end
 
@@ -15,7 +15,7 @@ class ChatsController < ApplicationController
 
   # POST /chats
   def create
-    @chat = Chat.new(chat_params)
+    @chat = @application.chats.new(chat_params)
 
     if @chat.save
       render json: @chat, status: :created
@@ -39,13 +39,17 @@ class ChatsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    
+    def set_application
+      @application = Application.find_by!(token: params[:application_token])
+    end
+
     def set_chat
-      @chat = Chat.find_by!(number: params[:chat_number])
+      @chat = @application.chats.find_by!(number: params[:number])
     end
 
     # Only allow a trusted parameter "white list" through.
     def chat_params
-      params.require(:chat).permit(:application_id)
+      params.require(:chat).permit(:name)
     end
 end

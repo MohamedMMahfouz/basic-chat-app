@@ -1,4 +1,4 @@
-class MessageSerializer < ApplicationSerializer
-  attributes :id, :content, :number
-  has_one :chat
+class MessageSerializer < ActiveModel::Serializer
+  attributes :content, :number
+  belongs_to :chat
 end
