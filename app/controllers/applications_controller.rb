@@ -5,7 +5,7 @@ class ApplicationsController < ApplicationController
   def index
     @applications = Application.all
 
-    render json: @applications
+    paginate collection: @applications
   end
 
   # GET /applications/1
@@ -18,7 +18,7 @@ class ApplicationsController < ApplicationController
     @application = Application.new(application_params)
 
     if @application.save
-      render json: @application, status: :created, location: @application
+      render json: @application, status: :created
     else
       render json: @application.errors, status: :unprocessable_entity
     end
@@ -41,11 +41,11 @@ class ApplicationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_application
-      @application = Application.find(params[:id])
+      @application = Application.find_by!(token: params[:token])
     end
 
     # Only allow a trusted parameter "white list" through.
     def application_params
-      params.require(:application).permit(:name, :token)
+      params.require(:application).permit(:name)
     end
 end

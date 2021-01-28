@@ -2,7 +2,8 @@ class CreateApplications < ActiveRecord::Migration[5.2]
   def change
     create_table :applications do |t|
       t.string :name
-      t.string :token
+      t.integer :chats_count
+      t.string :token, index: true, unique: true
 
       t.timestamps
     end
