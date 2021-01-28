@@ -1,5 +1,12 @@
 version: '2'
 services:
+  elasticsearch:
+    image: elasticsearch:6.5.0
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
   db: 
     image: mysql:5.7
     restart: always
@@ -19,6 +26,7 @@ services:
       - "3000:3000"
     depends_on:
       - db
+      - elasticsearch
     links:
       - db
     environment:
@@ -26,6 +34,8 @@ services:
       DB_NAME: app
       DB_PASSWORD: password
       DB_HOST: db
+      ELASTICSEARCH_HOST: elasticsearch
+
   redis:
     image: "redis:4.0-alpine"
     command: redis-server
@@ -42,5 +52,6 @@ services:
     environment:
       REDIS_URL: redis://redis:6379/0
 volumes:
+  elasticsearch:
   redis:
   db:
