@@ -16,7 +16,7 @@ class ChatsController < ApplicationController
   # POST /chats
   def create
     @chat = @application.chats.new(chat_params)
-
+    
     if @chat.save
       render json: @chat, status: :created
     else
