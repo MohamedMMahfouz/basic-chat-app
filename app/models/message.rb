@@ -2,7 +2,7 @@ class Message < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
-  belongs_to :chat
+  belongs_to :chat, counter_cache: :messages_count
 
   settings analysis: {
     filter: {
