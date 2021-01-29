@@ -1,0 +1,471 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Basic-Chat V1",
+    "version": "v1"
+  },
+  "paths": {
+    "/applications": {
+      "get": {
+        "summary": "Retrieve all applications",
+        "tags": [
+          "Application"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create an application",
+        "tags": [
+          "Application"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "application[name]",
+            "in": "formData"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success"
+          },
+          "422": {
+            "description": "Invalid"
+          }
+        }
+      }
+    },
+    "/applications/{token}": {
+      "get": {
+        "summary": "Retrieve an applications",
+        "tags": [
+          "Application"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an application",
+        "tags": [
+          "Application"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "application[name]",
+            "in": "formData"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "422": {
+            "description": "Invalid"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an application",
+        "tags": [
+          "Application"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Invalid"
+          }
+        }
+      }
+    },
+    "/applications/{application_token}/chats": {
+      "get": {
+        "summary": "Retrieve application chats",
+        "tags": [
+          "Chat"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "application_token",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create an application chat",
+        "tags": [
+          "Chat"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "application_token",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "chat[name]",
+            "in": "formData"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "422": {
+            "description": "Invalid"
+          }
+        }
+      }
+    },
+    "/applications/{application_token}/chats/{number}": {
+      "get": {
+        "summary": "Retrieve an application chat",
+        "tags": [
+          "Chat"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "application_token",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "number",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an application chat",
+        "tags": [
+          "Chat"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "application_token",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "number",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "chat[name]",
+            "in": "formData"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "422": {
+            "description": "Invalid"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an application chat",
+        "tags": [
+          "Chat"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "application_token",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "number",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Invalid"
+          }
+        }
+      }
+    },
+    "/applications/{application_token}/chats/{chat_number}/messages": {
+      "get": {
+        "summary": "Retrieve application chat messages",
+        "tags": [
+          "Message"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "application_token",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "chat_number",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create an application chat message",
+        "tags": [
+          "Message"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "application_token",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "chat_number",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "message[content]",
+            "in": "formData"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "422": {
+            "description": "Invalid"
+          }
+        }
+      }
+    },
+    "/applications/{application_token}/chats/{chat_number}/messages/{number}": {
+      "get": {
+        "summary": "Retrieve an application chat message",
+        "tags": [
+          "Message"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "application_token",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "chat_number",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "number",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an application chat",
+        "tags": [
+          "Message"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "application_token",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "chat_number",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "number",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "message[content]",
+            "in": "formData"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "422": {
+            "description": "Invalid"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an application chat",
+        "tags": [
+          "Message"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "application_token",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "chat_number",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "number",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Invalid"
+          }
+        }
+      }
+    }
+  }
+}
