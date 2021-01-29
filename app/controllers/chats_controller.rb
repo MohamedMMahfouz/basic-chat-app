@@ -4,7 +4,8 @@ class ChatsController < ApplicationController
 
   # GET /chats
   def index
-    @chats = @application.chats.all
+    @chats = @application.chats.all.includes(:messages)
+    
     paginate collection: @chats
   end
 
@@ -16,11 +17,13 @@ class ChatsController < ApplicationController
   # POST /chats
   def create
     @chat = @application.chats.new(chat_params)
-    
-    if @chat.save
-      render json: @chat, status: :created
+
+    if @chat.valid?
+      new_number = Redis.current.incr("app_#{@application.id}_chats_number")
+      Chats::CreateJob.perform_later(new_number, @application.id, chat_params)
+      render json: { chat_number: new_number }
     else
-      render json: @chat.errors, status: :unprocessable_entity
+        render json: @chat.errors, status: :unprocessable_entity
     end
   end
 

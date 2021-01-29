@@ -5,6 +5,7 @@ RSpec.describe ChatsController, type: :controller do
   let(:chat) { create(:chat) }
   let(:application) { create(:application) }
   let(:valid_attributes) { attributes_for(:chat) }
+  let(:invalid_attributes) { attributes_for(:chat, :invalid) }
 
   describe 'GET #index' do
     before { chats;chat }
@@ -20,7 +21,7 @@ RSpec.describe ChatsController, type: :controller do
   describe 'GET #show' do
     before { chat }
     context 'when showing an application chat with correct token and number' do
-      it 'returns success and correct number of applications' do 
+      it 'returns success' do 
         get :show, params: { application_token: chat.application.token, number: chat.number}
         expect(response).to be_successful
         expect(json[:id]).to be_nil
@@ -28,7 +29,7 @@ RSpec.describe ChatsController, type: :controller do
     end
 
     context 'when showing an applications with incorrect token' do
-      it 'returns success and correct number of applications' do 
+      it 'returns not found' do 
         get :show, params: { application_token: chat.application.token, number: "invalid token"}
         expect(response).to be_not_found
       end
@@ -36,42 +37,46 @@ RSpec.describe ChatsController, type: :controller do
   end
 
   describe "POST #create" do
-    context 'when givin valid params' do 
+    context 'when given valid params' do
+      before do 
+        expect(Chats::CreateJob).to receive(:perform_later)
+      end
       it 'returns success' do 
         post :create, params: { application_token: application.token, chat: valid_attributes }
         expect(response).to be_successful
+        expect(json[:chat_number]).to be_present
       end
     end
 
-    # context 'when givin invalid params' do 
-    #   it 'returns unprocessable entity with error key' do 
-    #     post :create, params: { application: invalid_attributes }
-    #     expect(response).to be_unprocessable
-    #     expect(json[:name]).to be_present
-    #   end
-    # end
+    context 'when given invalid params' do 
+      it 'returns unprocessable entity with error key' do 
+        post :create, params: {  application_token: application.token, chat: invalid_attributes  }
+        expect(response).to be_unprocessable
+        expect(json[:name]).to be_present
+      end
+    end
   end
   
   describe "PUT #update" do
-    context 'when givin valid params' do 
+    context 'when given valid params' do 
       it 'returns success' do 
         post :create, params: { application_token: chat.application.token, number: chat.number, chat: valid_attributes }
         expect(response).to be_successful
       end
     end
 
-    # context 'when givin invalid params' do 
-    #   it 'returns unporcessable entity with error key' do 
-    #     post :create, params: { application_token: chat.application.token, application: invalid_attributes }
-    #     expect(response).to be_unprocessable
-    #     expect(json[:name]).to be_present
-    #   end
-    # end
+    context 'when given invalid params' do 
+      it 'returns unporcessable entity with error key' do 
+        post :create, params: { application_token: chat.application.token, number: chat.number, chat: invalid_attributes }
+        expect(response).to be_unprocessable
+        expect(json[:name]).to be_present
+      end
+    end
   end
 
   describe "DELETE #delete" do
     before { chat }
-    context 'when givin valid token' do 
+    context 'when given valid token' do 
       it 'returns success and deletes record from table' do 
         expect do
           delete :destroy, params: { application_token: chat.application.token, number: chat.number }
@@ -80,7 +85,7 @@ RSpec.describe ChatsController, type: :controller do
       end
     end
 
-    context 'when givin invalid token' do
+    context 'when given invalid token' do
       it 'returns not found' do 
         expect do
           delete :destroy, params: { application_token: "invalid", number: "invalid token" }

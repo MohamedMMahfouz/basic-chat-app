@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 2021_01_29_121908) do
 
   create_table "applications", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "name"
-    t.integer "chats_count"
+    t.integer "chats_count", default: 0
     t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2021_01_29_121908) do
   create_table "chats", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.bigint "application_id"
     t.integer "number"
-    t.integer "messages_count"
+    t.integer "messages_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"

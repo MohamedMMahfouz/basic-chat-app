@@ -3,5 +3,9 @@ FactoryBot.define do
     content { "MyText" }
     chat
     number { 1 }
+
+    trait :invalid do 
+      content { nil }
+    end
   end
 end

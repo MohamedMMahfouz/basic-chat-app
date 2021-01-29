@@ -3,7 +3,7 @@ class ApplicationsController < ApplicationController
 
   # GET /applications
   def index
-    @applications = Application.all
+    @applications = Application.all.includes(:chats)
 
     paginate collection: @applications
   end

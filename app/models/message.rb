@@ -3,6 +3,8 @@ class Message < ApplicationRecord
   include Elasticsearch::Model::Callbacks
 
   belongs_to :chat, counter_cache: :messages_count
+  
+  validates_presence_of :content
 
   settings analysis: {
     filter: {

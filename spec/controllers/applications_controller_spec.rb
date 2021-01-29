@@ -20,7 +20,7 @@ RSpec.describe ApplicationsController, type: :controller do
   describe 'GET #show' do
     before { application }
     context 'when showing an applications with correct token' do
-      it 'returns success and correct number of applications' do 
+      it 'returns success' do 
         get :show, params: {token: application.token}
         expect(response).to be_successful
         expect(json[:id]).to be_nil
@@ -29,7 +29,7 @@ RSpec.describe ApplicationsController, type: :controller do
     end
 
     context 'when showing an applications with incorrect token' do
-      it 'returns success and correct number of applications' do 
+      it 'returns not found' do 
         get :show, params: {token: "invalid token"}
         expect(response).to be_not_found
       end
@@ -37,14 +37,14 @@ RSpec.describe ApplicationsController, type: :controller do
   end
 
   describe "POST #create" do
-    context 'when givin valid params' do 
+    context 'when given valid params' do 
       it 'returns success' do 
         post :create, params: { application: valid_attributes }
         expect(response).to be_successful
       end
     end
 
-    context 'when givin invalid params' do 
+    context 'when given invalid params' do 
       it 'returns unprocessable entity with error key' do 
         post :create, params: { application: invalid_attributes }
         expect(response).to be_unprocessable
@@ -54,14 +54,14 @@ RSpec.describe ApplicationsController, type: :controller do
   end
   
   describe "PUT #update" do
-    context 'when givin valid params' do 
+    context 'when given valid params' do 
       it 'returns success' do 
         post :create, params: { token: application.token, application: valid_attributes }
         expect(response).to be_successful
       end
     end
 
-    context 'when givin invalid params' do 
+    context 'when given invalid params' do 
       it 'returns unporcessable entity with error key' do 
         post :create, params: { token: application.token, application: invalid_attributes }
         expect(response).to be_unprocessable
@@ -72,7 +72,7 @@ RSpec.describe ApplicationsController, type: :controller do
 
   describe "DELETE #delete" do
     before { application }
-    context 'when givin valid token' do 
+    context 'when given valid token' do 
       it 'returns success and deletes record from table' do 
         expect do
           delete :destroy, params: { token: application.token }
@@ -81,7 +81,7 @@ RSpec.describe ApplicationsController, type: :controller do
       end
     end
 
-    context 'when givin invalid token' do
+    context 'when given invalid token' do
       it 'returns not found' do 
         expect do
           delete :destroy, params: { token: "invalid token" }

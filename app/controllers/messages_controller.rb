@@ -20,8 +20,10 @@ class MessagesController < ApplicationController
   def create
     @message = @chat.messages.new(message_params)
 
-    if @message.save
-      render json: @message, status: :created
+    if @message.valid?
+      new_number = Redis.current.incr("chat_#{@chat.id}_messages_number")
+      Messages::CreateJob.perform_later(new_number, @chat.id, message_params)
+      render json: { message_number: new_number }
     else
       render json: @message.errors, status: :unprocessable_entity
     end
