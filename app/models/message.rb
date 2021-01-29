@@ -8,8 +8,8 @@ class Message < ApplicationRecord
     filter: {
       edge_ngram_filter: {
         type: "edgeNGram",
-        min_gram: "2",
-        max_gram: "20",
+        min_gram: "1",
+        max_gram: "50",
       }
     },
     analyzer: {
