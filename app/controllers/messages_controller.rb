@@ -6,6 +6,7 @@ class MessagesController < ApplicationController
   # GET /messages
   def index
     @messages = @chat.messages
+    @messages = @messages.search(params[:query]) if params[:query].present?
 
     paginate collection: @messages
   end

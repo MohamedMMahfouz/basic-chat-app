@@ -66,5 +66,5 @@ gem 'sidekiq'
 gem 'will_paginate', '~> 3.1.7'
 gem 'active_model_serializers', '~> 0.10.0'
 gem "sidekiq-cron", "~> 1.1"
-gem 'elasticsearch-model'
-gem 'elasticsearch-rails'
+gem 'elasticsearch-model', '~> 6'
+gem 'elasticsearch-rails', '~> 6'

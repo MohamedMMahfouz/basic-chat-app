@@ -1,3 +1,31 @@
 class Message < ApplicationRecord
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   belongs_to :chat
+
+  settings analysis: {
+    filter: {
+      edge_ngram_filter: {
+        type: "edgeNGram",
+        min_gram: "2",
+        max_gram: "20",
+      }
+    },
+    analyzer: {
+      edge_ngram_analyzer: {
+        type: "custom",
+        tokenizer: "standard",
+        filter: ["lowercase", "edge_ngram_filter"]
+      }
+    }
+  } do
+    mappings do
+      indexes :content, type: "text", analyzer: "edge_ngram_analyzer"
+    end
+  end
+
+  def self.search(query = nil)  
+    __elasticsearch__.search(query).records.records
+  end
 end
