@@ -1,4 +1,8 @@
 update_counters_job:
   cron: "*/30 * * * *"
   class: "UpdateCountersJob"
-  queue: hard_worker
+  queue: default
+update_counters_job:
+  cron: "30 03 * * 0"
+  class: "AddMessageIndexJob"
+  queue: default

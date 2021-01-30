@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   elasticsearch:
     image: elasticsearch:6.5.0
@@ -15,11 +15,9 @@ services:
       MYSQL_DATABASE: app
       MYSQL_USER: user
       MYSQL_PASSWORD: password
-    ports:
-      - "3307:3306"
   app: 
     build: .
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    command: bin/docker-start
     volumes: 
       - ".:/app"
     ports: 
