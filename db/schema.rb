@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2021_01_29_121908) do
     t.string "name"
     t.index ["application_id", "number"], name: "index_chats_on_application_id_and_number", unique: true
     t.index ["application_id"], name: "index_chats_on_application_id"
+    t.index ["number"], name: "index_chats_on_number"
   end
 
   create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -40,6 +41,7 @@ ActiveRecord::Schema.define(version: 2021_01_29_121908) do
     t.datetime "updated_at", null: false
     t.index ["chat_id", "number"], name: "index_messages_on_chat_id_and_number", unique: true
     t.index ["chat_id"], name: "index_messages_on_chat_id"
+    t.index ["number"], name: "index_messages_on_number"
   end
 
   add_foreign_key "chats", "applications"
