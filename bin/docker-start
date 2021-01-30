@@ -16,9 +16,8 @@ echo "Elasticsearch is not ready, sleeping..."
 
 echo "Elasticsearch is ready, starting Rails."
 
-rm /rails/tmp/pids/server.pid
+rm /app/tmp/pids/server.pid
 
 # setup database and start puma
-RAILS_ENV=development bundle exec rake db:create
-RAILS_ENV=development bundle exec rake db:migrate
-RAILS_ENV=development bundle exec rails s -p 3000 -b '0.0.0.0'
+bundle exec rails db:exists && rails db:migrate || rails db:create db:migrate
+bundle exec rails s -p 3000 -b '0.0.0.0'
