@@ -21,6 +21,10 @@ RSpec.configure do |config|
         title: 'Basic-Chat V1',
         version: 'v1',
       },
+      security: [
+      ],
+      securityDefinitions: {
+      },
       paths: {},
     },
   }

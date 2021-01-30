@@ -19,6 +19,7 @@ describe 'Messages API' do
         let(:chat_number) { chat.number }
         let(:page) { '1' }
         let(:per_page) { '5' }
+        let(:query) { }
         run_test!
       end
     end
@@ -76,7 +77,7 @@ describe 'Messages API' do
   end
 
   path '/applications/{application_token}/chats/{chat_number}/messages/{number}' do
-    put 'Update an application chat' do
+    put 'Update an application chat message' do
       tags 'Message'
       consumes 'multipart/form-data'
       parameter name: :application_token, in: :path
@@ -103,7 +104,7 @@ describe 'Messages API' do
   end
 
   path '/applications/{application_token}/chats/{chat_number}/messages/{number}' do
-    delete 'Delete an application chat' do
+    delete 'Delete an application chat message' do
       tags 'Message'
       consumes 'multipart/form-data'
       parameter name: :application_token, in: :path

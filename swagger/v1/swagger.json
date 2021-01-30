@@ -4,6 +4,11 @@
     "title": "Basic-Chat V1",
     "version": "v1"
   },
+  "security": [
+
+  ],
+  "securityDefinitions": {
+  },
   "paths": {
     "/applications": {
       "get": {
@@ -401,7 +406,7 @@
         }
       },
       "put": {
-        "summary": "Update an application chat",
+        "summary": "Update an application chat message",
         "tags": [
           "Message"
         ],
@@ -439,7 +444,7 @@
         }
       },
       "delete": {
-        "summary": "Delete an application chat",
+        "summary": "Delete an application chat message",
         "tags": [
           "Message"
         ],
