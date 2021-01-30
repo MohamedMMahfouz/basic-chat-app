@@ -309,6 +309,12 @@
             "type": "string"
           },
           {
+            "name": "query",
+            "in": "query",
+            "type": "string",
+            "description": "search to partial match messages content"
+          },
+          {
             "name": "application_token",
             "in": "path",
             "required": true

@@ -9,6 +9,8 @@ describe 'Messages API' do
       produces 'application/json'
       parameter name: :page, in: :query, type: :string
       parameter name: :per_page, in: :query, type: :string
+      parameter name: :query, in: :query, type: :string,
+      description: "search to partial match messages content"
       parameter name: :application_token, in: :path
       parameter name: :chat_number, in: :path
       
