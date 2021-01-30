@@ -3,7 +3,7 @@ class CreateMessages < ActiveRecord::Migration[5.2]
     create_table :messages do |t|
       t.text :content
       t.references :chat, foreign_key: true
-      t.integer :number
+      t.integer :number, index: true
 
       t.timestamps
     end
